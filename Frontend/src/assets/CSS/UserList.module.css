@@ -1,0 +1,42 @@
+.userListContainer {
+  height: 32.5rem;
+  width: 30vw;
+  border: 2px solid white;
+  color: white;
+  /* flex-grow: 1; */
+  background-color: #0b192c;
+  border-radius: 10px;
+  margin-right: 1rem;
+}
+
+.joinedUser {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #0b192c;
+}
+.userListContainer span {
+  border-radius: 10px;
+  background-color: black;
+  height: 2.75rem;
+  border-bottom: 2px solid white;
+  padding: 5px;
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-align: center;
+  display: block;
+}
+
+.joinedUser ul {
+  display: flex;
+  flex-direction: column;
+}
+.joinedUser ul li {
+  padding: 1rem 0.5rem;
+  border-bottom: 2px solid gray;
+  list-style: none;
+  background-image: url("D:/CS/Web/BCK/ChatApp/Frontend/src/assets/images/bullet.png");
+  background-size: 10px 10px;
+  background-repeat: no-repeat;
+  background-position: left center;
+  padding-left: 25px;
+}
