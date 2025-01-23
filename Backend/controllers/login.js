@@ -1,5 +1,9 @@
 import User from "../models/user.js";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
+const SECRET_KEY =
+  "ec09bb5a857fb5c37bbeb4200c8bbdd50c3e5ff23e31e51a45b57942769b";
 const login = async (req, res) => {
   const { username, password } = req.body;
   try {
@@ -11,10 +15,10 @@ const login = async (req, res) => {
       return res.status(401).json({ error: "Invalid credentials!" });
 
     const token = jwt.sign({ id: user._id }, SECRET_KEY, { expiresIn: "1h" });
-    navigate("/");
     res.json({ token, username });
   } catch (err) {
     res.status(500).json({ error: "Server error" });
+    console.log(err);
   }
 };
 

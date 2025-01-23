@@ -7,8 +7,11 @@ import {
   faSmile,
 } from "@fortawesome/free-solid-svg-icons";
 import EmojiPicker from "emoji-picker-react";
+import { io } from "socket.io-client";
 
-const Chat = ({ socket, room, username, setTotalUsers, setShowChat }) => {
+const socket = io("http://localhost:8000");
+
+const Chat = ({ username, room }) => {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
   const chatBodyRef = useRef(null);
@@ -55,8 +58,8 @@ const Chat = ({ socket, room, username, setTotalUsers, setShowChat }) => {
 
   const handleLeaveRoom = () => {
     socket.emit("leave_room", { username, room }); // Inform the server
-    setTotalUsers([]); // Reset the user list
-    setShowChat(false); // Hide the chat interface
+    // setTotalUsers([]); // Reset the user list
+    // setShowChat(false); // Hide the chat interface
   };
 
   const sendMessage = async () => {
