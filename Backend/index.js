@@ -5,6 +5,7 @@ import http from "http";
 import cors from "cors";
 import { Server } from "socket.io";
 import authRoutes from "./routes/auth.js";
+import saveMessageRoute from "./routes/saveMessage.js";
 
 const app = express();
 
@@ -21,6 +22,7 @@ const io = new Server(server, {
 });
 
 app.use("/auth", authRoutes);
+app.use("/save-message", saveMessageRoute);
 
 // Database Connection
 mongoose
@@ -31,18 +33,16 @@ io.on("connection", (socket) => {
   // console.log("socket ID: ", socket.id);
 
   socket.on("join_room", ({ username, room }) => {
-    socket.join(room);
+    if (username && room) {
+      socket.join(room);
 
-    users.push({ socketId: socket.id, username, room });
-    console.log("joined", users);
-    // console.log(`User with ID: ${socket.id} joined room: ${room}`);
-    // console.log("Total users: ", users.length);
-
-    // Emit updated user list to everyone in the room
-    io.to(room).emit(
-      "user_list",
-      users.filter((user) => user.room === room)
-    );
+      users.push({ socketId: socket.id, username, room });
+      console.log(username, room);
+      io.to(room).emit(
+        "user_list",
+        users.filter((user) => user.room === room)
+      );
+    }
   });
 
   socket.on("leave_room", ({ username, room }) => {
@@ -83,15 +83,10 @@ io.on("connection", (socket) => {
     }
 
     console.log("user disconnected: ", socket.id);
-    console.log(users);
+    // console.log(users);
   });
 });
-// Routes
 
-// app.get("/", (req, res) => {
-//   res.send("Got it");
-// });
-// Start Server
 const PORT = 8000;
 server.listen(PORT, () =>
   console.log(`Server running on http://localhost:${PORT}`)

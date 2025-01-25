@@ -7,13 +7,13 @@ import {
   faSmile,
 } from "@fortawesome/free-solid-svg-icons";
 import EmojiPicker from "emoji-picker-react";
-import { io } from "socket.io-client";
-
-const socket = io("http://localhost:8000");
+import socket from "../../socket";
+import { useNavigate } from "react-router-dom";
 
 const Chat = ({ username, room }) => {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
+  const navigate = useNavigate();
   const chatBodyRef = useRef(null);
   const [typingUser, setTypingUser] = useState("");
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
@@ -57,15 +57,14 @@ const Chat = ({ username, room }) => {
   };
 
   const handleLeaveRoom = () => {
-    socket.emit("leave_room", { username, room }); // Inform the server
-    // setTotalUsers([]); // Reset the user list
-    // setShowChat(false); // Hide the chat interface
+    socket.emit("leave_room", { username, room });
+    navigate("/home");
   };
 
   const sendMessage = async () => {
     if (currentMessage !== "") {
       const messageData = {
-        room: room,
+        room,
         message: currentMessage,
         author: username,
         time:
@@ -73,8 +72,26 @@ const Chat = ({ username, room }) => {
           ":" +
           new Date(Date.now()).getMinutes().toString().padStart(2, "0"),
       };
-      await socket.emit("send_message", messageData);
+
       setMessageList((list) => [...list, messageData]);
+
+      try {
+        const response = await fetch("http://localhost:8000/save-message", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(messageData),
+        });
+
+        const result = await response.json();
+
+        if (!result.success) {
+          console.error("Failed to save the message.");
+        }
+      } catch (error) {
+        console.error("Error saving message to backend:", error);
+      }
       setCurrentMessage("");
       socket.emit("stop_typing", room);
     }

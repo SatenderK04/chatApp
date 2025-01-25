@@ -1,11 +1,8 @@
 import React, { useEffect } from "react";
 import JoinRoom from "../src/components/JoinRoom.jsx";
-import { io } from "socket.io-client";
-
-const socket = io("http://localhost:8000");
+import socket from "../socket";
 const Home = () => {
   const username = localStorage.getItem("username");
-  // const room = localStorage.getItem("room");
 
   // useEffect(() => {
   //   if (!username || !room) {
