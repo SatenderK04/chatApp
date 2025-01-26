@@ -34,10 +34,19 @@ io.on("connection", (socket) => {
 
   socket.on("join_room", ({ username, room }) => {
     if (username && room) {
-      socket.join(room);
+      const existingUser = users.find(
+        (user) => user.username === username && user.room === room
+      );
+      if (existingUser) {
+        console.log(`${username} is already in room: ${room}`);
+        return;
+      }
 
+      socket.join(room);
       users.push({ socketId: socket.id, username, room });
-      console.log(username, room);
+
+      console.log(`${username} joined room: ${room}`);
+
       io.to(room).emit(
         "user_list",
         users.filter((user) => user.room === room)
@@ -48,18 +57,20 @@ io.on("connection", (socket) => {
   socket.on("leave_room", ({ username, room }) => {
     const index = users.findIndex((user) => user.socketId === socket.id);
     if (index !== -1) {
-      users.splice(index, 1); // Remove user from the list
+      users.splice(index, 1);
       socket.leave(room);
+
+      console.log(`${username} has left room: ${room}`);
 
       io.to(room).emit(
         "user_list",
         users.filter((user) => user.room === room)
       );
     }
-    console.log(`${username} has left room: ${room}`);
   });
 
   socket.on("send_message", (data) => {
+    console.log("Sending message to room:", data);
     socket.to(data.room).emit("receive_message", data);
   });
 
@@ -76,14 +87,13 @@ io.on("connection", (socket) => {
     if (index !== -1) {
       const user = users[index];
       users.splice(index, 1);
+      console.log(`User disconnected: ${user.username} (${socket.id})`);
+
       io.to(user.room).emit(
         "user_list",
         users.filter((user) => user.room === user.room)
       );
     }
-
-    console.log("user disconnected: ", socket.id);
-    // console.log(users);
   });
 });
 

@@ -72,9 +72,7 @@ const Chat = ({ username, room }) => {
           ":" +
           new Date(Date.now()).getMinutes().toString().padStart(2, "0"),
       };
-
       setMessageList((list) => [...list, messageData]);
-
       try {
         const response = await fetch("http://localhost:8000/save-message", {
           method: "POST",
@@ -94,18 +92,25 @@ const Chat = ({ username, room }) => {
       }
       setCurrentMessage("");
       socket.emit("stop_typing", room);
+
+      await socket.emit("send_message", messageData);
     }
   };
 
   useEffect(() => {
+    console.log("Updated message list: ", messageList);
+  }, [messageList]);
+
+  useEffect(() => {
     socket.on("receive_message", (data) => {
+      console.log("Received message:", data);
       setMessageList((list) => [...list, data]);
     });
 
     return () => {
       socket.off("receive_message");
     };
-  }, [socket]);
+  }, []);
 
   return (
     <div className={styles.chatContainer}>

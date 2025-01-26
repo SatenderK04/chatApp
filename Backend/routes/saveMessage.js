@@ -3,6 +3,6 @@ import saveMessage from "../controllers/saveMessage.js";
 
 const router = express.Router();
 
-router.post("/save-message", saveMessage);
+router.post("/", saveMessage);
 
 export default router;

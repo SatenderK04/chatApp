@@ -10,7 +10,8 @@ const messageSchema = new mongoose.Schema({
     required: true,
   },
   author: {
-    type: mongoose.Schema.Types.ObjectId,
+    // type: mongoose.Schema.Types.ObjectId,
+    type: String,
     ref: "User",
     required: true,
   },
@@ -19,7 +20,7 @@ const messageSchema = new mongoose.Schema({
   //   ref: "User",
   // },
   time: {
-    type: Date,
+    type: String,
     default: Date.now,
   },
 });

@@ -1,5 +1,5 @@
-const home = async () => {
-  res.send("Hi");
-};
+// const home = async () => {
+//   res.send("Hi");
+// };
 
-export default home;
+// export default home;

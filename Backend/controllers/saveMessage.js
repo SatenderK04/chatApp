@@ -1,27 +1,22 @@
-import Message from "../models/message.js";
+import MessageModel from "../models/Message.js";
 
 const saveMessage = async (req, res) => {
-  const { room, message, author, time } = req.body;
-
-  // Validate input
-  if (!room || !message || !author || !time) {
-    return res
-      .status(400)
-      .json({ success: false, error: "All fields are required." });
-  }
-
   try {
-    const newMessage = new Message({ room, message, author, time });
+    const { room, message, author, time } = req.body;
+
+    // Validate request
+    if (!room || !message || !author || !time) {
+      return res.status(400).json({ success: false, error: "Invalid data" });
+    }
+
+    // Save message to database
+    const newMessage = new MessageModel({ room, message, author, time });
     await newMessage.save();
-    res
-      .status(201)
-      .json({ success: true, message: "Message saved successfully!" });
+
+    return res.status(201).json({ success: true, message: "Message saved" });
   } catch (error) {
-    console.error(
-      "Error saving message:",
-      process.env.NODE_ENV === "development" ? error.stack : error.message
-    );
-    res.status(500).json({ success: false, error: "Failed to save message." });
+    console.error("Error saving message:", error);
+    return res.status(500).json({ success: false, error: "Server error" });
   }
 };
 

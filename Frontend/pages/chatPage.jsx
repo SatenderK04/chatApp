@@ -1,6 +1,7 @@
 import React from "react";
 import Chat from "../src/components/Chat";
 import { useLocation } from "react-router-dom";
+import UserList from "../src/components/UserList";
 
 const ChatPage = () => {
   const location = useLocation();
@@ -10,6 +11,7 @@ const ChatPage = () => {
   console.log(username, room);
   return (
     <>
+      {/* <UserList /> */}
       {username && room ? (
         <Chat username={username} room={room} />
       ) : (
