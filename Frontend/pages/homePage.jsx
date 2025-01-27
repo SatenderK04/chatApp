@@ -1,23 +1,27 @@
 import React, { useEffect } from "react";
 import JoinRoom from "../src/components/JoinRoom.jsx";
 import socket from "../socket";
+import { useNavigate } from "react-router-dom";
+import styles from "../src/CSS/HomePage.module.css";
+
 const Home = () => {
+  const navigate = useNavigate();
   const username = localStorage.getItem("username");
 
-  // useEffect(() => {
-  //   if (!username || !room) {
-  //     alert("You must log in first!");
-  //   }
-  //   window.location = "/";
-  // }, [username, room]);
+  useEffect(() => {
+    if (!username) {
+      navigate("/");
+    }
+  }, [username, navigate]);
 
   return (
-    <div>
-      <h1>Welcome</h1>
-      <p>Logged in as: {username}</p>
-      {/* <UserList /> */}
-      <JoinRoom username={username} socket={socket} />
-      {/* <Chat username={username} room={room} /> */}
+    <div className={styles.container}>
+      <h1 className={styles.username}>
+        Welcome <span>{username}</span> !
+      </h1>
+      <div className={styles.joinRoomContainer}>
+        <JoinRoom username={username} socket={socket} />
+      </div>
     </div>
   );
 };

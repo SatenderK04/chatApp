@@ -1,8 +1,9 @@
 .userListContainer {
-  height: 32.5rem;
-  width: 30vw;
-  border: 2px solid white;
-  color: white;
+  height: 36rem;
+
+  width: 25vw;
+  border: 2px solid rgb(15, 2, 80);
+  color: rgb(216, 216, 216);
   /* flex-grow: 1; */
   background-color: #0b192c;
   border-radius: 10px;
@@ -10,18 +11,18 @@
 }
 
 .joinedUser {
-  margin-top: 1rem;
-  padding: 1rem;
+  /* margin-top: 0.5rem; */
+  padding: 0 0.25rem;
   background-color: #0b192c;
 }
 .userListContainer span {
   border-radius: 10px;
   background-color: black;
-  height: 2.75rem;
-  border-bottom: 2px solid white;
-  padding: 5px;
+  height: 2rem;
+  /* border-bottom: 2px solid white; */
+  padding: 0.65rem 0;
   font-size: 1.5rem;
-  font-weight: 800;
+  font-weight: 600;
   text-align: center;
   display: block;
 }
@@ -29,8 +30,11 @@
 .joinedUser ul {
   display: flex;
   flex-direction: column;
+  margin-right: 0;
 }
 .joinedUser ul li {
+  display: flex;
+  align-items: center;
   padding: 1rem 0.5rem;
   border-bottom: 2px solid gray;
   list-style: none;
@@ -38,5 +42,5 @@
   background-size: 10px 10px;
   background-repeat: no-repeat;
   background-position: left center;
-  padding-left: 25px;
+  padding-left: 15px;
 }

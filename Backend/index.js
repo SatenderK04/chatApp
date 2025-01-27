@@ -6,9 +6,12 @@ import cors from "cors";
 import { Server } from "socket.io";
 import authRoutes from "./routes/auth.js";
 import saveMessageRoute from "./routes/saveMessage.js";
+import cookieParser from "cookie-parser";
+// import getUser from "./controllers/getUser.js";
 
 const app = express();
 
+app.use(cookieParser());
 app.use(cors());
 app.use(bodyParser.json());
 const server = http.createServer(app);
@@ -18,12 +21,13 @@ const io = new Server(server, {
   cors: {
     origin: "http://localhost:5173",
     methods: ["GET", "POST"],
+    credentials: true,
   },
 });
 
 app.use("/auth", authRoutes);
 app.use("/save-message", saveMessageRoute);
-
+// app.use("/user", getUser);
 // Database Connection
 mongoose
   .connect("mongodb://127.0.0.1:27017/chatApp")

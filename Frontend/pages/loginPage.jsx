@@ -32,11 +32,13 @@ function Login() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
+
       const data = await response.json();
       if (response.ok) {
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("username", data.username);
+        localStorage.setItem("token", data.token); // Save token
+        localStorage.setItem("username", data.username); // Save username
         navigate("/home");
+        // console.log("userloggedin", username);
       } else {
         alert(data.error);
       }

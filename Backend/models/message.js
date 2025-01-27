@@ -4,6 +4,8 @@ const messageSchema = new mongoose.Schema({
   room: {
     type: String,
     required: true,
+    minlength: 6,
+    maxlength: 6,
   },
   message: {
     type: String,

@@ -1,0 +1,89 @@
+/* HomePage.module.css */
+
+/* Style for the whole page */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  width: 30vw;
+  background: rgb(38, 38, 68);
+  border: 2px solid white;
+  font-family: "Arial", sans-serif;
+}
+
+/* Style for the heading */
+h1 {
+  font-size: 2rem;
+  color: #2d2d2d;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* .inputRoom style */
+.inputRoom {
+  height: 2rem; /* Height of the input field */
+  width: 50%; /* Full width to make it responsive */
+  max-width: 400px; /* Max width for larger screens */
+  padding: 0.5rem; /* Padding inside the input field */
+  font-size: 1rem; /* Font size for the input text */
+  border: 1px solid #ccc; /* Light border color */
+  border-radius: 5px; /* Rounded corners */
+  box-sizing: border-box; /* Ensures padding and border are included in the element's total width and height */
+  outline: none; /* Removes default focus outline */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for border and shadow */
+}
+
+/* Focus state style */
+.inputRoom:focus {
+  border-color: #007bff; /* Blue border color on focus */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Blue shadow for focus */
+}
+
+/* Optional: style for placeholder text */
+.inputRoom::placeholder {
+  color: #888; /* Lighter color for placeholder text */
+  font-style: italic; /* Italic style for placeholder */
+}
+
+/* Style for the username display */
+.username {
+  /* font-size: 1.2rem; */
+  color: #aab2b9;
+  margin-bottom: 40px;
+}
+
+/* Container for the JoinRoom component */
+.joinRoomContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Style for buttons or form elements in JoinRoom */
+.joinRoomButton {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+.joinRoomButton:hover {
+  background-color: #0056b3;
+}
+
+/* Style for error messages or warnings */
+.errorMessage {
+  color: red;
+  font-size: 1rem;
+  margin-top: 20px;
+}

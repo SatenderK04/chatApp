@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 // import { io } from "socket.io-client";
 import socket from "../../socket";
+import styles from "../CSS/HomePage.module.css";
 // const socket = io("http://localhost:8000");
 
 const JoinRoom = ({ username }) => {
@@ -21,15 +22,18 @@ const JoinRoom = ({ username }) => {
     }
   };
   return (
-    <div>
+    <div className={styles.joinRoomContainer}>
       <input
-        placeholder="Room Code"
+        className={styles.inputRoom}
+        placeholder="Room Code: 6 Characters"
         onChange={(e) => {
           setRoomCode(e.target.value);
         }}
         value={roomCode}
       />
-      <button onClick={handleJoinRoom}>Join</button>
+      <button onClick={handleJoinRoom} className={styles.joinRoomButton}>
+        Join
+      </button>
       {/* {roomCode && <Chat username={username} room={roomCode} socket={socket} />} */}
     </div>
   );

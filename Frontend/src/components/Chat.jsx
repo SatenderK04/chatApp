@@ -5,6 +5,7 @@ import {
   faDoorOpen,
   faPaperPlane,
   faSmile,
+  faPaperclip,
 } from "@fortawesome/free-solid-svg-icons";
 import EmojiPicker from "emoji-picker-react";
 import socket from "../../socket";
@@ -58,6 +59,7 @@ const Chat = ({ username, room }) => {
 
   const handleLeaveRoom = () => {
     socket.emit("leave_room", { username, room });
+    localStorage.removeItem("username");
     navigate("/home");
   };
 
@@ -115,7 +117,7 @@ const Chat = ({ username, room }) => {
   return (
     <div className={styles.chatContainer}>
       <div className={styles.chatHeader}>
-        <p>Live Chat {`(${username})`}</p>
+        <p> {`${username}`}</p>
         <FontAwesomeIcon
           icon={faDoorOpen}
           className={styles.exitIcon}
@@ -175,6 +177,9 @@ const Chat = ({ username, room }) => {
               onMouseOver={() => setShowEmojiPicker(true)}
             />
           )}
+          <div className={styles.paperClip}>
+            <FontAwesomeIcon icon={faPaperclip} />
+          </div>
           {showEmojiPicker && (
             <div className={styles.emojiPickerContainer}>
               <EmojiPicker
