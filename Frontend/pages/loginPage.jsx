@@ -38,7 +38,7 @@ function Login() {
   const handleLogin = async () => {
     try {
       const response = await fetch(
-        "https://chatapp-backend-yn09.onrender.com/login",
+        "https://chatapp-backend-yn09.onrender.com/auth/login",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -48,10 +48,9 @@ function Login() {
 
       const data = await response.json();
       if (response.ok) {
-        localStorage.setItem("token", data.token); // Save token
-        localStorage.setItem("username", data.username); // Save username
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("username", data.username);
         navigate("/home");
-        // console.log("userloggedin", username);
       } else {
         alert(data.error);
       }
