@@ -1,40 +1,56 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import { io } from "socket.io-client";
 import socket from "../../socket";
 import styles from "../CSS/HomePage.module.css";
-// const socket = io("http://localhost:8000");
 
 const JoinRoom = ({ username }) => {
   const [roomCode, setRoomCode] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleJoinRoom = () => {
-    if (roomCode.trim() !== "") {
-      socket.emit("join_room", { username, room: roomCode });
-      localStorage.setItem("room", roomCode);
-      console.log(`Joined room ${roomCode}`);
+  const handleInputChange = (e) => {
+    const value = e.target.value;
 
-      // Pass data through navigation state
-      navigate("/chat", { state: { username, room: roomCode } });
+    // Validate the input
+    if (/^[A-Za-z0-9]{0,6}$/.test(value)) {
+      setRoomCode(value);
+      setError("");
     } else {
-      console.log("Please Enter a Valid Room Code");
+      setError("Room code must be 6 alphanumeric characters only.");
     }
   };
+
+  const handleJoinRoom = () => {
+    if (roomCode.length !== 6) {
+      setError("Room code must have exactly 6 characters !");
+    } else {
+      setError("");
+
+      if (roomCode.trim() !== "") {
+        socket.emit("join_room", { username, room: roomCode });
+        localStorage.setItem("room", roomCode);
+        console.log(`Joined room ${roomCode}`);
+
+        navigate("/chat", { state: { username, room: roomCode } });
+      } else {
+        setError("Please enter a valid Room Code.");
+      }
+    }
+  };
+
   return (
     <div className={styles.joinRoomContainer}>
       <input
         className={styles.inputRoom}
         placeholder="Room Code: 6 Characters"
-        onChange={(e) => {
-          setRoomCode(e.target.value);
-        }}
+        onChange={handleInputChange}
         value={roomCode}
+        maxLength={6}
       />
       <button onClick={handleJoinRoom} className={styles.joinRoomButton}>
         Join
       </button>
-      {/* {roomCode && <Chat username={username} room={roomCode} socket={socket} />} */}
+      {error && <p className={styles.errorMessage}>{error}</p>}
     </div>
   );
 };

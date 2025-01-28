@@ -1,8 +1,11 @@
+import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
+dotenv.config();
 
 const JWT_SECRET =
+  process.env.JWT_SECRET ||
   "ec09bb5a857fb5c37bbeb4200c8bbdd50c3e5ff23e31e51a45b57942769b";
 
 const signup = async (req, res) => {
@@ -25,11 +28,13 @@ const signup = async (req, res) => {
     const token = jwt.sign(
       { id: newUser._id, username: newUser.username },
       JWT_SECRET,
-      { expiresIn: "1h" }
+      {
+        expiresIn: "1h",
+      }
     );
 
-    // Send response with the token
-    res.status(201).json({ user: newUser, token });
+    // Send response with the token and username
+    res.status(201).json({ token, username: newUser.username });
   } catch (err) {
     res.status(500).json({ error: "Something went wrong" });
     console.log(err);

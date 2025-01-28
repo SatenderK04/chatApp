@@ -14,14 +14,21 @@ function Login() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
+
+      const data = await response.json();
+
       if (response.ok) {
-        // alert("Signup successful!");
+        // Save token and username in localStorage
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("username", data.username);
+
         navigate("/home");
       } else {
-        alert("Signup failed!");
+        alert(data.message || "Signup failed!");
       }
     } catch (error) {
       console.error("Signup error:", error);
+      alert("An error occurred during signup.");
     }
   };
 

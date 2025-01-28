@@ -7,8 +7,11 @@ import { Server } from "socket.io";
 import authRoutes from "./routes/auth.js";
 import saveMessageRoute from "./routes/saveMessage.js";
 import cookieParser from "cookie-parser";
-// import getUser from "./controllers/getUser.js";
+import dotenv from "dotenv";
 
+dotenv.config();
+
+const PORT = process.env.PORT || 8000;
 const app = express();
 
 app.use(cookieParser());
@@ -30,9 +33,14 @@ app.use("/save-message", saveMessageRoute);
 // app.use("/user", getUser);
 // Database Connection
 mongoose
-  .connect("mongodb://127.0.0.1:27017/chatApp")
-  .then(() => console.log("Connected to MongoDB"))
+  .connect(
+    process.env.MONGO_URI ||
+      "mongodb+srv://satenderk1204:Qz0L0afu5ZNMC4a0@cluster0.hrydr.mongodb.net/chatApp?retryWrites=true&w=majority",
+    { serverSelectionTimeoutMS: 50000 }
+  )
+  .then(() => console.log("Connected to MongoDB Atlas"))
   .catch((err) => console.error("MongoDB connection error:", err));
+
 io.on("connection", (socket) => {
   // console.log("socket ID: ", socket.id);
 
@@ -101,7 +109,6 @@ io.on("connection", (socket) => {
   });
 });
 
-const PORT = 8000;
 server.listen(PORT, () =>
   console.log(`Server running on http://localhost:${PORT}`)
 );

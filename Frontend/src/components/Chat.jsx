@@ -60,6 +60,7 @@ const Chat = ({ username, room }) => {
   const handleLeaveRoom = () => {
     socket.emit("leave_room", { username, room });
     localStorage.removeItem("username");
+    // if localStorage.removeItem("username") is removed then it will redirect to home but it will store the username of the latest joined user
     navigate("/home");
   };
 
