@@ -77,13 +77,16 @@ const Chat = ({ username, room }) => {
       };
       setMessageList((list) => [...list, messageData]);
       try {
-        const response = await fetch("http://localhost:8000/save-message", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(messageData),
-        });
+        const response = await fetch(
+          "https://chatapp-backend-yn09.onrender.com/save-message",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(messageData),
+          }
+        );
 
         const result = await response.json();
 
