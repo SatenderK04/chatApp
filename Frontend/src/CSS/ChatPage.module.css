@@ -5,8 +5,43 @@
 }
 
 h1 span {
-  color: yellow;
+  color: rgb(214, 250, 56);
+  margin-left: 0.5rem;
+  display: flex;
+  align-items: center;
+  /* font-size: 2rem; */
 }
 .roomHeading {
   color: rgb(206, 206, 206);
+  /* border: 2px solid red; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.copyButton {
+  /* margin-left: 10px 10px; */
+  margin-left: 0.5rem;
+  padding: 5px 10px;
+  background-color: #000;
+  color: white;
+  border: 1px solid white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.75rem;
+}
+
+.copyButton:hover {
+  background-color: #252f39;
+}
+
+.copyMessage {
+  padding: 0.5rem;
+  border-radius: 5px;
+  background-color: black;
+  right: 16%;
+  position: absolute;
+  margin-left: 10px;
+  color: white;
+  font-size: 0.8rem;
 }

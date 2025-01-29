@@ -30,8 +30,7 @@ const io = new Server(server, {
 
 app.use("/auth", authRoutes);
 app.use("/save-message", saveMessageRoute);
-// app.use("/user", getUser);
-// Database Connection
+
 mongoose
   .connect(
     process.env.MONGO_URI ||
