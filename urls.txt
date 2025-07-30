@@ -1,0 +1,3 @@
+Frontend:=> https://chatapp-frontend-x1dp.onrender.com
+Backend:=> https://chatapp-backend-yn09.onrender.com
+MONGO_URI:=> mongodb+srv://satenderk1204:Qz0L0afu5ZNMC4a0@cluster0.hrydr.mongodb.net/chatApp?retryWrites=true&w=majority
